@@ -1,23 +1,23 @@
-<!DOCTYPE html>
+>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>منصة بلوغ المرام</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;transition:background-color .3s,color .3s,border-color .3s}
+*{margin:0;padding:0;box-sizing:border-box;scrollbar-width:none;-ms-overflow-style:none}
+*::-webkit-scrollbar{display:none}
 :root{--blue:#2563EB;--bl:#EFF6FF;--bm:#BFDBFE;--bd:#1d4ed8;--green:#16a34a;--gl:#f0fdf4;--red:#dc2626;--rl:#fef2f2;--yellow:#f59e0b;--yl:#fffbeb;--purple:#7c3aed;--pl:#f5f3ff;--gray:#6b7280;--grl:#f9fafb;--border:#e5e7eb;--text:#111827;--bg:#f1f5f9;--card:#fff;--nav-bg:rgba(255,255,255,.97)}
 /* DARK MODE */
 /* ===== INTERACTIONS — hover يكبر، active يصغر، transition ناعم ===== */
 /* قاعدة: duration بين 0.1s و 0.2s فقط، scale أو translate فقط */
 
 /* الأزرار */
-button{transition:transform .12s ease,box-shadow .12s ease;will-change:transform}
+button{transition:transform .12s ease,box-shadow .12s ease}
 button:not(#loutb):not(#lout-btn):not(.tppc):not(.lboxcl):hover{transform:scale(1.04)}
 button:not(#loutb):not(#lout-btn):not(.tppc):not(.lboxcl):active{transform:scale(.95)}
-
 /* المكعبات */
 .cube{transition:transform .18s ease,box-shadow .18s ease}
 .cube:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 8px 20px rgba(0,0,0,.16)}
@@ -385,7 +385,126 @@ h2{font-size:20px;font-weight:800}h3{font-size:17px;font-weight:700}
 .lbox{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:600;display:none;align-items:center;justify-content:center}
 .lbox.open{display:flex}.lbox img{max-width:92%;max-height:88vh;border-radius:9px}
 .lboxcl{position:absolute;top:13px;right:17px;background:none;border:none;color:#fff;font-size:26px;cursor:pointer}
-@media(max-width:560px){.sidebar{display:none}.content{padding:12px}.devbox{flex-direction:column}}
+body,body *{transition:background-color .25s,color .25s,border-color .25s}
+button,input,textarea{transition:transform .12s ease,border-color .15s,background .15s!important}
+/* HAMBURGER MENU */
+.ham-btn{display:none;background:none;border:none;font-size:22px;cursor:pointer;color:rgba(255,255,255,.9);padding:4px 8px;line-height:1}
+.mob-nav{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.5)}
+.mob-nav.open{display:block}
+.mob-sidebar{position:fixed;right:0;top:0;bottom:0;width:240px;background:var(--card);z-index:501;padding:20px 12px;overflow-y:auto;border-left:1px solid var(--border);animation:slideInRight .2s ease}
+@keyframes slideInRight{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@media(max-width:560px){
+  /* ===== LAYOUT ===== */
+  .sidebar{display:none}
+  .ham-btn{display:inline-flex}
+  .content{padding:10px;max-width:100%}
+  .awrap{min-height:calc(100vh - 54px)}
+  .devbox{flex-direction:column}
+
+  /* ===== LANDING NAV ===== */
+  .lnav{padding:10px 14px}
+  .llogo{font-size:16px}
+  .lnavr{gap:6px}
+  .lnavr .btn{padding:7px 12px;font-size:12px}
+
+  /* ===== HERO ===== */
+  .hero{padding:32px 16px 28px}
+  .hero h1{font-size:26px}
+  .hero p{font-size:14px;line-height:1.7}
+  .hbtns{flex-direction:column;align-items:center;gap:8px}
+  .hbtns .btn,.hbtns .hwa{width:100%;max-width:300px;justify-content:center}
+  .hmain{font-size:15px;padding:12px 20px}
+
+  /* ===== STATS STRIP ===== */
+  .sstrip{gap:16px;padding:12px}
+  .ssn{font-size:18px}
+
+  /* ===== FEATURES GRID ===== */
+  .fgrid{grid-template-columns:repeat(2,1fr);gap:9px}
+  .fc2{padding:13px 10px}
+  .fic{font-size:22px}
+  .fc2 h4{font-size:12px}
+  .fc2 p{font-size:11px}
+
+  /* ===== LEVEL CARDS ===== */
+  .levgrid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .lcard2{padding:14px 8px}
+  .lcard2 .li2{font-size:22px}
+  .lcard2 h4{font-size:12px}
+
+  /* ===== AUTH MODAL ===== */
+  .mbox{padding:20px 16px;border-radius:16px;max-height:95vh}
+  .otpd{width:44px;height:50px;font-size:20px}
+  .lsel{grid-template-columns:repeat(3,1fr);gap:5px}
+  .lbtn{padding:8px 4px}
+  .lbi{font-size:18px}
+  .lbtn h5{font-size:11px}
+
+  /* ===== APP NAV ===== */
+  .anav{padding:0 12px;height:50px}
+  .alogo{font-size:14px}
+  .navr{gap:5px}
+  .navcls{display:none}
+  .navnm{font-size:12px;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .xpb{font-size:11px;padding:2px 7px}
+
+  /* ===== SUBJECT CUBES ===== */
+  .cubes-grid{grid-template-columns:repeat(2,1fr);gap:9px}
+  .cube{padding:16px 10px;border-radius:13px}
+  .cube .cube-ico{font-size:26px;margin-bottom:5px}
+  .cube .cube-name{font-size:12px}
+  .cube .cube-count{font-size:10px}
+
+  /* ===== LESSON CARDS ===== */
+  .lcard3{padding:12px}
+  .sjcard{padding:11px}
+
+  /* ===== QUIZ ===== */
+  .qztop{padding:10px 12px}
+  .qcard{padding:12px}
+  .qtxt{font-size:14px}
+  .opt{padding:9px 11px;font-size:12px}
+
+  /* ===== FLASHCARDS ===== */
+  .fcf,.fcb{font-size:18px;padding:28px 16px;min-height:160px}
+
+  /* ===== LEADERBOARD ===== */
+  .lbtabs{gap:4px}
+  .lbtab{padding:4px 9px;font-size:11px}
+  .lbrow{padding:8px}
+  .lbnm{font-size:12px}
+
+  /* ===== RESULT SCREEN ===== */
+  .reshero{padding:16px}
+  .scc{width:80px;height:80px}
+  .scn{font-size:20px}
+
+  /* ===== AI CHAT ===== */
+  #ai-chat-panel{width:calc(100vw - 20px)!important;left:10px!important;right:10px!important;bottom:70px!important}
+  #ai-float-btn{bottom:14px;left:14px;width:44px;height:44px;font-size:20px}
+
+  /* ===== SETTINGS ===== */
+  .card{padding:14px}
+
+  /* ===== TOAST ===== */
+  .twrap{bottom:10px;right:10px;left:10px}
+  .toast{max-width:100%}
+
+  /* ===== TEACHER CONTACT ===== */
+  .stcard{flex-direction:column;gap:10px}
+
+  /* ===== PLACEMENT TEST ===== */
+  #placement-screen .plopt{font-size:12px;padding:9px 11px}
+}
+
+/* Very small screens */
+@media(max-width:360px){
+  .cubes-grid{grid-template-columns:repeat(2,1fr);gap:7px}
+  .cube{padding:12px 8px}
+  .cube .cube-ico{font-size:22px}
+  .otpd{width:38px;height:46px;font-size:18px}
+  .hero h1{font-size:22px}
+}
 </style>
 </head>
 <body>
@@ -414,12 +533,12 @@ h2{font-size:20px;font-weight:800}h3{font-size:17px;font-weight:700}
 </div>
 
 <!-- PLACEMENT TEST -->
-<div id="placement-screen" style="display:none;position:fixed;inset:0;background:#f1f5f9;z-index:800;overflow-y:auto">
+<div id="placement-screen" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:800;overflow-y:auto">
   <div style="max-width:480px;margin:0 auto;padding:32px 20px">
     <div style="text-align:center;margin-bottom:28px">
       <div style="font-size:40px;margin-bottom:10px">🎯</div>
-      <h2 style="font-size:22px;font-weight:900;margin-bottom:6px">اختبار تحديد المستوى</h2>
-      <p style="font-size:13px;color:#6b7280">5 أسئلة سريعة لنعرف من أين تبدأ</p>
+      <h2 style="font-size:22px;font-weight:900;margin-bottom:6px;color:var(--text)">اختبار تحديد المستوى</h2>
+      <p style="font-size:13px;color:var(--gray)">5 أسئلة سريعة لنعرف من أين تبدأ</p>
     </div>
     <div id="placement-content"></div>
   </div>
@@ -445,11 +564,6 @@ h2{font-size:20px;font-weight:800}h3{font-size:17px;font-weight:700}
     <label>رقم الهاتف</label>
     <div class="phrow"><div class="pcc">🌍 +222</div><input type="tel" id="lphone" placeholder="xxxxxxxx" maxlength="8" inputmode="numeric" style="flex:1;direction:ltr;text-align:left"></div>
     <button class="btn bp blk" onclick="doLoginPhone()">إرسال رمز التحقق ←</button>
-    <div class="ordiv">أو</div>
-    <button class="gbtn" onclick="toast('تسجيل Google قريباً')">
-      <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-      تسجيل الدخول بجوجل (قريباً)
-    </button>
    </div>
    <div id="l-s2" class="astep">
     <p style="font-size:12px;color:var(--gray);margin-bottom:10px">رمز التحقق أُرسل إلى <strong id="lto"></strong></p>
@@ -475,11 +589,6 @@ h2{font-size:20px;font-weight:800}h3{font-size:17px;font-weight:700}
     <label>رقم الهاتف</label>
     <div class="phrow"><div class="pcc">🌍 +222</div><input type="tel" id="rphone" placeholder="xxxxxxxx" maxlength="8" inputmode="numeric" style="flex:1;direction:ltr;text-align:left"></div>
     <button class="btn bp blk" onclick="doRegStep1()">التالي ←</button>
-    <div class="ordiv">أو</div>
-    <button class="gbtn" onclick="toast('تسجيل Google قريباً')">
-      <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-      التسجيل بجوجل (قريباً)
-    </button>
    </div>
    <!-- Step 2: Level + Grade -->
    <div id="r-s2" class="astep">
@@ -544,13 +653,13 @@ h2{font-size:20px;font-weight:800}h3{font-size:17px;font-weight:700}
   </div>
   <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px">
    <div style="height:1px;width:70px;background:linear-gradient(to left,transparent,#f59e0b)"></div>
-   <span style="color:#f59e0b;font-size:14px;font-weight:700;letter-spacing:3px">شرف · خاء · عدل</span>
-   <span style="font-size:18px">🇲🇷</span>
+   <span style="color:#f59e0b;font-size:14px;font-weight:700;letter-spacing:3px">شرف · إخاء · عدل</span>
+   <span style="font-size:18px"></span>
    <div style="height:1px;width:70px;background:linear-gradient(to right,transparent,#f59e0b)"></div>
   </div>
  </div>
  <nav class="lnav">
-  <div class="llogo"><span style="color:#fbbf24">منصة</span> بلوغ <span>المرام</span></div>
+  <div class="llogo"><span style="color:#fff">منصة</span> بلوغ المرام</div>
   <div style="display:flex;gap:7px;align-items:center">
    <button onclick="toggleDark()" id="dark-btn" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:5px 10px;font-size:14px;cursor:pointer;color:#fff">🌙</button>
    <button class="btn bs sm" onclick="openAuth('login')" id="t-login">دخول</button>
@@ -558,6 +667,7 @@ h2{font-size:20px;font-weight:800}h3{font-size:17px;font-weight:700}
   </div>
  </nav>
  <div class="hero">
+  
   <div class="hbdg anim-fadeup" id="t-badge">🚀 منصة تعليمية ذكية</div>
   <h1 class="anim-fadeup anim-delay1" id="t-h1">تعلّم بذكاء<br><em id="t-h1b">وتفوّق قبل الامتحان</em></h1>
   <p class="anim-fadeup anim-delay2" id="t-hero-p">تعلّم بطريقة تناسب مستواك — ليس مثل باقي التطبيقات.<br>المنصة تحلل أداءك وتركّز على نقاط ضعفك تحديداً.</p>
@@ -627,7 +737,10 @@ h2{font-size:20px;font-weight:800}h3{font-size:17px;font-weight:700}
 <!-- ======= APP ======= -->
 <div id="app">
  <nav class="anav">
-  <div class="alogo"><span style="color:#fbbf24">منصة</span> بلوغ <span>المرام</span></div>
+  <div style="display:flex;align-items:center;gap:8px">
+   <button class="ham-btn" onclick="openMobNav()" title="القائمة">☰</button>
+   <div class="alogo"><span style="color:#fbbf24">منصة</span> بلوغ <span>المرام</span></div>
+  </div>
   <div class="navr">
    <button onclick="toggleDark()" style="background:none;border:none;font-size:16px;cursor:pointer;color:rgba(255,255,255,.8)">🌙</button>
    <span class="navcls" id="navcls"></span>
@@ -635,6 +748,16 @@ h2{font-size:20px;font-weight:800}h3{font-size:17px;font-weight:700}
    <span class="xpb hidden" id="navxp">⚡ <span id="xpv">0</span></span>
   </div>
  </nav>
+ <!-- Mobile nav overlay -->
+ <div class="mob-nav" id="mob-nav" onclick="closeMobNav()">
+  <div class="mob-sidebar" id="mob-sidebar" onclick="event.stopPropagation()">
+   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)">
+    <span style="font-weight:800;font-size:15px;color:var(--text)">القائمة</span>
+    <button onclick="closeMobNav()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--gray)">×</button>
+   </div>
+   <div id="mob-sidebar-content"></div>
+  </div>
+ </div>
  <div class="awrap">
   <div class="sidebar" id="sidebar"></div>
   <div class="content" id="content"></div>
@@ -827,26 +950,26 @@ const ss=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 
 // === STATE ===
 let user=null,isAdmin=false;
-let chapters=gs('bam_ch',sampleData()); // will be overwritten by Supabase
+let chapters=sampleData(); // placeholder حتى يحمل من Supabase
 let students=[];
-
-// Load chapters from Supabase on startup - non-blocking
-(async()=>{
-  try{
-    const ch=await Promise.race([
-      loadCh(),
-      new Promise((_,r)=>setTimeout(()=>r('timeout'),2000))
-    ]);
-    if(ch)chapters=ch;
-  }catch{
-    chapters=gs('bam_ch',sampleData());
-  }
-})();
 let curLesson=null;
 let reg={name:'',phone:'',level:'',grade:'',stream:''};
 let otp={code:'',timer:null,type:''};
 let qQ=[],qIdx=0,qAns=[],qHL=3,qHU=0,qSel=null,ansType='write';
 let fcI=0,eqt='mcq';
+// نظام التقارير
+let quizStartTime=0,qHintsUsed=0,qHintsPerQ={};
+// حفظ وتحميل التقارير
+function saveReport(subject,report){
+  const key='bam_report_'+user.phone+'_'+subject;
+  const existing=gs(key,[]);
+  existing.unshift({...report,date:new Date().toLocaleDateString('ar')});
+  if(existing.length>5)existing.length=5; // احتفظ بآخر 5 تقارير
+  ss(key,existing);
+}
+function getReports(subject){
+  return gs('bam_report_'+user?.phone+'_'+subject,[]);
+}
 
 // === DARK MODE ===
 let darkMode=localStorage.getItem('bam_dark')==='1';
@@ -873,7 +996,7 @@ const TRANS={
     start:'ابدأ التعلم مجاناً ←',contact:'💬 تواصل معنا',
     login:'دخول',register:'ابدأ مجاناً',
     teachTitle:'📞 تواصل مع الأستاذ',teachSub:'لم تفهم شيئاً؟ تواصل مع أستاذك مباشرة',
-    slogan:'🇲🇷 أبناء الوطن · شرف خاء عدل',
+    slogan:'أبناء الوطن · شرف · إخاء · عدل',
     // App
     home:'الرئيسية',progress:'تقدمي',path:'مساري',leaders:'المتصدرون',
     teachers:'الأساتذة',settings:'الإعدادات',
@@ -908,7 +1031,7 @@ const TRANS={
     start:'Commencer gratuitement →',contact:'💬 Nous contacter',
     login:'Connexion',register:'Commencer',
     teachTitle:'📞 Contacter le professeur',teachSub:'Tu n\'as pas compris? Contacte ton professeur',
-    slogan:'🇲🇷 Enfants de la patrie · Honneur · Justice',
+    slogan:'Enfants de la patrie · Honneur · Justice',
     // App
     home:'Accueil',progress:'Ma progression',path:'Mon parcours',leaders:'Classement',
     teachers:'Professeurs',settings:'Paramètres',
@@ -969,7 +1092,20 @@ function toggleLang(){
 // Get translated text
 function T(key){return TRANS[lang]?.[key]||TRANS['ar'][key]||key;}
 document.addEventListener('DOMContentLoaded',()=>{
-  runLoader(()=>{applyLang();applyDark();checkHash();});
+  applyLang();applyDark();
+  runLoader(async()=>{
+    // Load chapters in background during loader
+    try{
+      const ch=await Promise.race([
+        loadCh(),
+        new Promise((_,r)=>setTimeout(()=>r('timeout'),2000))
+      ]);
+      if(ch)chapters=ch;
+    }catch{
+      chapters=gs('bam_ch',sampleData());
+    }
+    checkHash();
+  });
 });
 // === LOADING SCREEN ===
 const loadingMsgs=['جاري تحميل المنصة...','جاري تحليل مستواك...','نُجهّز تجربتك المخصصة...','المنصة جاهزة ✓'];
@@ -978,29 +1114,32 @@ function runLoader(cb){
   const bar=document.getElementById('loading-bar');
   const msg=document.getElementById('loading-msg');
   const ls=document.getElementById('loading-screen');
-  if(!bar||!ls){cb&&cb();return;}
+  if(!ls){cb&&cb();return;}
   const msgs=window._loadMsgs||loadingMsgs;
-  let p=0,i=0;
+  let p=0,i=0,done=false;
 
   function finish(){
+    if(done)return;
+    done=true;
+    clearInterval(iv);
+    clearTimeout(forceEnd);
     ls.style.transition='opacity .3s';
     ls.style.opacity='0';
-    setTimeout(()=>{ls.style.display='none';cb&&cb();},300);
+    setTimeout(()=>{
+      ls.style.display='none';
+      cb&&cb();
+    },300);
   }
 
-  // Force finish after 2 seconds no matter what
-  const forceEnd=setTimeout(finish, 2000);
+  // Force finish after 2.5 seconds no matter what
+  const forceEnd=setTimeout(finish,2500);
 
   const iv=setInterval(()=>{
-    p+=Math.random()*25+10;
+    p+=Math.random()*20+8;
     if(p>100)p=100;
-    bar.style.width=p+'%';
+    if(bar)bar.style.width=p+'%';
     if(i<msgs.length&&p>i*28){if(msg)msg.textContent=msgs[i];i++;}
-    if(p>=100){
-      clearInterval(iv);
-      clearTimeout(forceEnd);
-      setTimeout(finish, 400);
-    }
+    if(p>=100){clearInterval(iv);clearTimeout(forceEnd);setTimeout(finish,400);}
   },100);
 }
 
@@ -1074,10 +1213,10 @@ function renderPL(){
   const header=document.createElement('div');
   header.style.cssText='text-align:center;margin-bottom:20px';
   header.innerHTML='<div style="font-size:40px;margin-bottom:8px">'+q.emoji+'</div>'+
-    '<div style="font-size:11px;color:#6b7280;font-weight:700;margin-bottom:12px">خطوة '+(plIdx+1)+' من '+PL_QUESTIONS.length+'</div>'+
-    '<div style="height:5px;background:#e5e7eb;border-radius:3px;overflow:hidden;margin-bottom:16px"><div style="height:100%;width:'+pct+'%;background:linear-gradient(to left,var(--blue),var(--purple));border-radius:3px;transition:.4s"></div></div>'+
-    '<h3 style="font-size:18px;font-weight:900;line-height:1.4">'+q.q+'</h3>'+
-    (isMulti?'<p style="font-size:12px;color:#6b7280;margin-top:6px">يمكنك اختيار أكثر من واحدة</p>':'');
+    '<div style="font-size:11px;color:var(--gray);font-weight:700;margin-bottom:12px">خطوة '+(plIdx+1)+' من '+PL_QUESTIONS.length+'</div>'+
+    '<div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:16px"><div style="height:100%;width:'+pct+'%;background:linear-gradient(to left,var(--blue),var(--purple));border-radius:3px;transition:.4s"></div></div>'+
+    '<h3 style="font-size:18px;font-weight:900;line-height:1.4;color:var(--text)">'+q.q+'</h3>'+
+    (isMulti?'<p style="font-size:12px;color:var(--gray);margin-top:6px">يمكنك اختيار أكثر من واحدة</p>':'');
   wrap.appendChild(header);
   const grid=document.createElement('div');
   grid.style.cssText='display:grid;gap:8px;margin-bottom:14px;max-height:350px;overflow-y:auto';
@@ -1085,7 +1224,7 @@ function renderPL(){
     var btn=document.createElement('button');
     btn.className='plopt';
     btn.dataset.val=o.val;
-    btn.style.cssText='padding:10px 14px;border:2px solid #e5e7eb;border-radius:11px;background:#fff;font-family:Tajawal,sans-serif;font-size:13px;cursor:pointer;text-align:right;transition:.15s;display:flex;align-items:center;gap:9px;width:100%';
+    btn.style.cssText='padding:10px 14px;border:2px solid var(--border);border-radius:11px;background:var(--card);color:var(--text);font-family:Tajawal,sans-serif;font-size:13px;cursor:pointer;text-align:right;transition:.15s;display:flex;align-items:center;gap:9px;width:100%';
     btn.innerHTML='<span style="font-size:20px">'+o.icon+'</span><span style="font-weight:600;flex:1">'+o.text+'</span>'+(isMulti?'<span class="pl-check" style="font-size:16px;opacity:.3">☐</span>':'');
     btn.onclick=function(){plToggle(this,o.val,isMulti);};
     grid.appendChild(btn);
@@ -1105,13 +1244,13 @@ function renderPL(){
 
 function plToggle(el,val,multi){
   if(!multi){
-    document.querySelectorAll('.plopt').forEach(function(b){b.style.background='#fff';b.style.borderColor='#e5e7eb';});
+    document.querySelectorAll('.plopt').forEach(function(b){b.style.background='var(--card)';b.style.borderColor='var(--border)';});
     el.style.background='var(--bl)';el.style.borderColor='var(--blue)';
     plSel=val;
   } else {
     var isSel=el.dataset.selected==='1';
     if(isSel){
-      el.dataset.selected='0';el.style.background='#fff';el.style.borderColor='#e5e7eb';
+      el.dataset.selected='0';el.style.background='var(--card)';el.style.borderColor='var(--border)';
       var chk=el.querySelector('.pl-check');if(chk){chk.textContent='☐';chk.style.opacity='.3';}
     } else {
       el.dataset.selected='1';el.style.background='var(--bl)';el.style.borderColor='var(--blue)';
@@ -1150,14 +1289,14 @@ function finishPL(){
     <div style="animation:fadeUp .3s ease">
       <div style="text-align:center;margin-bottom:20px">
         <div style="font-size:48px;margin-bottom:10px">🗺️</div>
-        <h3 style="font-size:20px;font-weight:900;margin-bottom:5px">خطتك الشخصية جاهزة!</h3>
-        <p style="font-size:13px;color:#6b7280">المنصة ستتكيف مع أسلوبك تلقائياً</p>
+        <h3 style="font-size:20px;font-weight:900;margin-bottom:5px;color:var(--text)">خطتك الشخصية جاهزة!</h3>
+        <p style="font-size:13px;color:var(--gray)">المنصة ستتكيف مع أسلوبك تلقائياً</p>
       </div>
       <div style="display:grid;gap:8px;margin-bottom:16px">
         ${plan.map(p=>`
-          <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:13px 15px;display:flex;align-items:center;gap:12px">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 15px;display:flex;align-items:center;gap:12px">
             <span style="font-size:22px">${p.icon}</span>
-            <div><div style="font-size:11px;color:#6b7280;font-weight:700">${p.title}</div><div style="font-size:14px;font-weight:800;margin-top:1px">${p.desc}</div></div>
+            <div><div style="font-size:11px;color:var(--gray);font-weight:700">${p.title}</div><div style="font-size:14px;font-weight:800;margin-top:1px;color:var(--text)">${p.desc}</div></div>
           </div>`).join('')}
       </div>
       <div style="background:linear-gradient(135deg,var(--bl),#f0f9ff);border:1px solid var(--bm);border-radius:12px;padding:13px;margin-bottom:14px;font-size:13px;color:#1e40af;line-height:1.7">
@@ -1178,7 +1317,7 @@ function checkHash(){
   }
 }
 window.addEventListener('hashchange',checkHash);
-document.addEventListener('DOMContentLoaded',checkHash);
+
 
 // === AUTH HELPERS ===
 function openAuth(tab){document.getElementById('mbg').classList.add('open');swtAuth(tab||'login');}
@@ -1229,7 +1368,7 @@ async function doLoginPhone(){
   if(!existing){toast('الرقم غير مسجّل — أنشئ حساباً أولاً','er');return;}
   otp.type='login';reg.phone=ph;
   document.getElementById('lto').textContent='+222 '+ph;
-  genOTP();goStep('l','2');startTimer('lt-s','lt-row','l-resend');document.getElementById('ld0').focus();
+  genOTP();goStep('l','2');startTimer('lt-s','lt-row','l-resend');setTimeout(()=>{document.getElementById('ld0')?.focus()},300);
 }
 async function doLoginOTP(){
   const v=getOTPVal('l');
@@ -1243,11 +1382,22 @@ async function doLoginOTP(){
 }
 
 // === REGISTER ===
-function doRegStep1(){
+async function doRegStep1(){
   const nm=document.getElementById('rname').value.trim();
   const ph=document.getElementById('rphone').value.trim();
   if(!nm){toast('اكتب اسمك الكامل','er');return;}
   if(ph.length<7){toast('أدخل رقم هاتف صحيح','er');return;}
+  // Disable button to prevent double-tap
+  const btn=document.querySelector('#r-s1 .btn.bp');
+  if(btn){btn.disabled=true;btn.textContent='جاري التحقق...';}
+  // Check if phone already registered
+  const existing=await loadStu(ph);
+  if(btn){btn.disabled=false;btn.textContent=T('next');}
+  if(existing){
+    toast('الرقم مسجّل مسبقاً — جاري الدخول...','ok');
+    user=existing;isAdmin=false;closeAuth();startApp();
+    return;
+  }
   reg.name=nm;reg.phone=ph;
   goStep('r','2');
 }
@@ -1290,7 +1440,7 @@ function doRegStep2(){
   if(!reg.level){toast('اختر مرحلتك','er');return;}
   if(!reg.grade){toast('اختر الفصل','er');return;}
   if(LEVEL_CFG[reg.level]?.streams&&!reg.stream){toast('اختر الشعبة','er');return;}
-  genOTP();otp.type='register';goStep('r','3');startTimer('rt-s','rt-row','r-resend');document.getElementById('rd0').focus();
+  genOTP();otp.type='register';goStep('r','3');startTimer('rt-s','rt-row','r-resend');setTimeout(()=>{document.getElementById('rd0')?.focus()},300);
 }
 async function doRegOTP(){
   const v=getOTPVal('r');
@@ -1347,20 +1497,36 @@ function logout(){saveStu();_doLogout();}
 // === SIDEBAR ===
 function buildSB(){
   const sb=document.getElementById('sidebar');
+  const sbContent=getSBContent();
+  if(sb)sb.innerHTML=sbContent;
+  // Sync mobile sidebar too
+  const mob=document.getElementById('mob-sidebar-content');
+  if(mob)mob.innerHTML=sbContent;
+}
+function getSBContent(){
   if(isAdmin){
-    sb.innerHTML=`<div class="silbl">المدير</div>
-      <div class="si on" onclick="renderAdmin()"><span class="sii">⚙️</span>المحتوى</div>
-      <div class="si" onclick="renderAdmStudents()"><span class="sii">👥</span>الطلاب</div>
+    return`<div class="silbl">المدير</div>
+      <div class="si on" onclick="renderAdmin();closeMobNav()"><span class="sii">⚙️</span>المحتوى</div>
+      <div class="si" onclick="renderAdmStudents();closeMobNav()"><span class="sii">👥</span>الطلاب</div>
       <div class="sisep"></div>
-      <div class="si" onclick="renderLB()"><span class="sii">🏅</span>المتصدرون</div>`;
-  } else {
-    sb.innerHTML=`<div class="si on" onclick="renderHome()"><span class="sii">🏠</span>${T('home')}</div>
-      <div class="si" onclick="renderProgress()"><span class="sii">📊</span>${T('progress')}</div>
-      <div class="si" onclick="renderPath()"><span class="sii">🎯</span>${T('path')}</div>
-      <div class="si" onclick="renderLB()"><span class="sii">🏅</span>${T('leaders')}</div>
-      <div class="si" onclick="renderTeachers()"><span class="sii">👨‍🏫</span>${T('teachers')}</div>
-      <div class="si" onclick="renderSettings()"><span class="sii">⚙️</span>${T('settings')}</div>`;
+      <div class="si" onclick="renderLB();closeMobNav()"><span class="sii">🏅</span>المتصدرون</div>`;
   }
+  return`<div class="si on" onclick="renderHome();closeMobNav()"><span class="sii">🏠</span>${T('home')}</div>
+    <div class="si" onclick="renderProgress();closeMobNav()"><span class="sii">📊</span>${T('progress')}</div>
+    <div class="si" onclick="renderReports();closeMobNav()"><span class="sii">📈</span>${lang==='fr'?'Rapports':'تقاريري'}</div>
+    <div class="si" onclick="renderPath();closeMobNav()"><span class="sii">🎯</span>${T('path')}</div>
+    <div class="si" onclick="renderLB();closeMobNav()"><span class="sii">🏅</span>${T('leaders')}</div>
+    <div class="si" onclick="renderTeachers();closeMobNav()"><span class="sii">👨‍🏫</span>${T('teachers')}</div>
+    <div class="si" onclick="renderSettings();closeMobNav()"><span class="sii">⚙️</span>${T('settings')}</div>`;
+}
+function openMobNav(){
+  const mob=document.getElementById('mob-nav');
+  const content=document.getElementById('mob-sidebar-content');
+  if(content)content.innerHTML=getSBContent();
+  if(mob)mob.classList.add('open');
+}
+function closeMobNav(){
+  document.getElementById('mob-nav')?.classList.remove('open');
 }
 function setSA(n){document.querySelectorAll('.si').forEach((x,i)=>x.classList.toggle('on',i===n));}
 
@@ -1430,15 +1596,141 @@ async function renderHome(){
 }
 
 // === SUBJECT VIEW ===
+// === طرق الدراسة لكل مادة ===
+const STUDY_METHODS={
+  'الرياضيات':{
+    color:'#7c3aed',steps:[
+      {ico:'🎥',title:'شاهد الشرح','desc':'فيديو قصير 5-10 دقائق'},
+      {ico:'📝',title:'أمثلة محلولة','desc':'خطوة بخطوة'},
+      {ico:'✍️',title:'تمارين متدرجة','desc':'من السهل للصعب'},
+      {ico:'🎯',title:'هدف النجاح','desc':'80% صح قبل الانتقال'}
+    ],tip:'لا تنتقل للدرس التالي حتى تحل معظم الأسئلة بنفسك'
+  },
+  'الفيزياء':{
+    color:'#ea580c',steps:[
+      {ico:'🎥',title:'فهم القانون','desc':'شاهد الشرح أولاً'},
+      {ico:'📐',title:'طبّق القانون','desc':'على أمثلة بسيطة'},
+      {ico:'✍️',title:'مسائل','desc':'طبّق ما تعلمته'},
+      {ico:'🔁',title:'راجع','desc':'الأخطاء الشائعة'}
+    ],tip:'الفيزياء فهم لا حفظ — ركّز على لماذا لا كيف'
+  },
+  'الكيمياء':{
+    color:'#db2777',steps:[
+      {ico:'🃏',title:'فلاش كارد',desc:'مفاهيم وعناصر'},
+      {ico:'🎥',title:'شرح التفاعلات','desc':'بفيديو'},
+      {ico:'✍️',title:'تمارين','desc':'معادلات وحسابات'},
+      {ico:'🔬',title:'ربط','desc':'بالحياة اليومية'}
+    ],tip:'احفظ الجدول الدوري تدريجياً — لا كله دفعة واحدة'
+  },
+  'التربية الإسلامية':{
+    color:'#059669',steps:[
+      {ico:'📖',title:'اقرأ بتمعن','desc':'النص كاملاً أولاً'},
+      {ico:'🃏',title:'فلاش كارد','desc':'المفاهيم الأساسية'},
+      {ico:'❓',title:'أسئلة الفهم','desc':'تأكد من استيعابك'},
+      {ico:'🔁',title:'مراجعة يومية','desc':'5 دقائق كافية'}
+    ],tip:'ربط المعلومة بحياتك يجعل حفظها أسهل بكثير'
+  },
+  'التربية المدنية':{
+    color:'#0891b2',steps:[
+      {ico:'📖',title:'قراءة النص','desc':'بتركيز'},
+      {ico:'🃏',title:'فلاش كارد','desc':'المصطلحات والتعريفات'},
+      {ico:'❓',title:'أسئلة تحليلية','desc':'لا حفظ فقط'},
+      {ico:'🔁',title:'مراجعة أسبوعية','desc':'10 دقائق'}
+    ],tip:'افهم الفكرة قبل حفظ التعريف'
+  },
+  'التاريخ':{
+    color:'#d97706',steps:[
+      {ico:'🗺️',title:'مايند ماب','desc':'للأحداث والتواريخ'},
+      {ico:'🃏',title:'فلاش كارد','desc':'أسماء وتواريخ'},
+      {ico:'🔗',title:'ربط الأحداث','desc':'السبب والنتيجة'},
+      {ico:'❓',title:'أسئلة تحليلية','desc':'ليس حفظاً فقط'}
+    ],tip:'اربط كل حدث بسببه ونتيجته — ستتذكره دائماً'
+  },
+  'الجغرافيا':{
+    color:'#16a34a',steps:[
+      {ico:'🗺️',title:'الخريطة أولاً','desc':'حدّد المواقع'},
+      {ico:'🃏',title:'فلاش كارد','desc':'مصطلحات جغرافية'},
+      {ico:'🔗',title:'ربط','desc':'المناخ بالسكان والاقتصاد'},
+      {ico:'❓',title:'أسئلة تطبيقية','desc':'حلل الظواهر'}
+    ],tip:'الخريطة أداسك الأساسية — تدرّب عليها يومياً'
+  },
+  'اللغة العربية':{
+    color:'#dc2626',steps:[
+      {ico:'🎙️',title:'اقرأ بصوت عالٍ','desc':'النص كاملاً'},
+      {ico:'🃏',title:'فلاش كارد','desc':'مفردات وقواعد'},
+      {ico:'✍️',title:'طبّق القواعد','desc':'في جمل جديدة'},
+      {ico:'🎤',title:'إملاء صوتي','desc':'للتدريب'}
+    ],tip:'الكتابة اليومية تحسّن لغتك أكثر من أي شيء آخر'
+  },
+  'العربية':{
+    color:'#dc2626',steps:[
+      {ico:'🎙️',title:'اقرأ بصوت عالٍ','desc':'النص كاملاً'},
+      {ico:'🃏',title:'فلاش كارد','desc':'مفردات وقواعد'},
+      {ico:'✍️',title:'طبّق القواعد','desc':'في جمل جديدة'},
+      {ico:'🎤',title:'إملاء صوتي','desc':'للتدريب'}
+    ],tip:'الكتابة اليومية تحسّن لغتك أكثر من أي شيء آخر'
+  },
+  'الإنجليزية':{
+    color:'#0284c7',steps:[
+      {ico:'🃏',title:'10 كلمات يومياً','desc':'فلاش كارد مفردات'},
+      {ico:'🎧',title:'استماع','desc':'وإملاء صوتي'},
+      {ico:'📐',title:'تحليل القواعد','desc':'Grammar بالأمثلة'},
+      {ico:'💬',title:'تحدّث','desc':'مع المساعد بالإنجليزية'}
+    ],tip:'10 دقائق يومياً أفضل من ساعة أسبوعياً'
+  },
+  'الفرنسية':{
+    color:'#4f46e5',steps:[
+      {ico:'🃏',title:'10 كلمات يومياً','desc':'فلاش كارد مفردات'},
+      {ico:'🎧',title:'استماع','desc':'وإملاء صوتي'},
+      {ico:'📐',title:'القواعد','desc':'Grammaire بالأمثلة'},
+      {ico:'💬',title:'تحدّث','desc':'مع المساعد بالفرنسية'}
+    ],tip:'استمع للفرنسية يومياً حتى لو 5 دقائق'
+  },
+  'العلوم الطبيعية':{
+    color:'#2563eb',steps:[
+      {ico:'🎥',title:'فيديو الشرح','desc':'شاهد التجارب'},
+      {ico:'🃏',title:'فلاش كارد','desc':'مصطلحات علمية'},
+      {ico:'✍️',title:'تمارين','desc':'أسئلة فهم وتطبيق'},
+      {ico:'🔬',title:'ربط','desc':'بالحياة اليومية'}
+    ],tip:'المصطلحات الفرنسية مهمة — احفظها مع معانيها العربية'
+  }
+};
+
 function renderSubject(sEnc){
   const s=decodeURIComponent(sEnc);
   const cfg=SUBJ_CUBE[s]||{ico:'📚',cls:'cube-other'};
+  const method=STUDY_METHODS[s];
   const myChs=chapters.filter(ch=>ch.level===user.level&&ch.grade===user.grade&&ch.subject===s&&(!user.stream||!ch.stream||ch.stream===user.stream));
-  let html=`<button class="bkbtn" onclick="renderHome()">← رجوع</button>
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-      <div style="width:46px;height:46px;border-radius:12px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:22px">${cfg.ico}</div>
-      <h2>${s}</h2>
+
+  // بطاقة طريقة الدراسة
+  let methodHTML='';
+  if(method){
+    methodHTML=`
+    <div style="background:linear-gradient(135deg,${method.color}22,${method.color}11);border:1.5px solid ${method.color}44;border-radius:14px;padding:14px;margin-bottom:16px">
+      <div style="font-weight:800;font-size:13px;color:${method.color};margin-bottom:10px">🎯 طريقة دراسة ${s}</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px">
+        ${method.steps.map((st,i)=>`
+          <div style="background:rgba(255,255,255,.7);border-radius:10px;padding:9px;display:flex;gap:8px;align-items:start">
+            <span style="font-size:18px;flex-shrink:0">${st.ico}</span>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--text)">${i+1}. ${st.title}</div>
+              <div style="font-size:11px;color:var(--gray)">${st.desc}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div style="background:${method.color}22;border-radius:8px;padding:8px 10px;font-size:12px;color:${method.color};font-weight:600">
+        💡 ${method.tip}
+      </div>
     </div>`;
+  }
+
+  let html=`<button class="bkbtn" onclick="renderHome()">← رجوع</button>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+      <div style="width:46px;height:46px;border-radius:12px;background:${method?.color||'var(--blue)'};display:flex;align-items:center;justify-content:center;font-size:22px">${cfg.ico}</div>
+      <h2>${s}</h2>
+    </div>
+    ${methodHTML}`;
+
   if(!myChs.length){
     html+=`<div class="card" style="text-align:center;padding:28px;color:var(--gray)"><div style="font-size:36px;margin-bottom:8px">📭</div><p>لا توجد وحدات بعد</p></div>`;
   } else {
@@ -1596,21 +1888,59 @@ function closeTP(){document.getElementById('tpo').classList.remove('open');docum
 function initQuiz(){
   const l=curLesson,c=document.getElementById('quiz-inner');if(!c)return;
   if(!l.questions?.length){c.innerHTML='<p style="color:var(--gray);text-align:center;padding:20px">لا توجد أسئلة</p>';return;}
-  qQ=[...l.questions];qIdx=0;qAns=[];qHL=3;qHU=0;qSel=null;ansType='write';renderQ(c);
+  qQ=[...l.questions];qIdx=0;qAns=[];qHL=3;qHU=0;qSel=null;ansType='write';
+  quizStartTime=Date.now();qHintsUsed=0;qHintsPerQ={};
+  renderQ(c);
 }
 function renderQ(c){
   const q=qQ[qIdx];const pct=Math.round((qIdx/qQ.length)*100);
+  const hintsLeft=3-(qHintsPerQ[qIdx]||0);
   let body='';
   if(q.type==='mcq')body=`<div class="opts">${q.opts.map((o,i)=>`<button class="opt" onclick="selO(this,${i})">${o}</button>`).join('')}</div>`;
   else if(q.type==='tf')body=`<div class="opts"><button class="opt" onclick="selO(this,1)">✅ صحيح</button><button class="opt" onclick="selO(this,0)">❌ خطأ</button></div>`;
   else{const dictBtn=q.hasDict?`<button class="attb${ansType==='dict'?' on':''}" onclick="setAT('dict')">🎤 إملاء</button>`:'';body=`<div class="attsw"><button class="attb${ansType==='write'?' on':''}" onclick="setAT('write')">✍️ كتابة</button>${dictBtn}</div><div id="ainw">${ansInput()}</div>`;}
   c.innerHTML=`
     <div class="qztop">
-      <div class="qzmeta"><span class="qnum">سؤال ${qIdx+1}/${qQ.length}</span><span class="xpleft">⚡ ${q.xp||10} XP</span><button class="hintb" onclick="useHint()">💡 ${qHL}</button></div>
+      <div class="qzmeta">
+        <span class="qnum">سؤال ${qIdx+1}/${qQ.length}</span>
+        <span class="xpleft">⚡ ${q.xp||10} XP</span>
+        <button class="hintb" onclick="useSmartHint()" ${hintsLeft===0?'disabled style="opacity:.4"':''}>
+          💡 ${hintsLeft} تلميح
+        </button>
+      </div>
       <div class="qzprog"><div class="qzfill" style="width:${pct}%"></div></div>
     </div>
     <div class="qcard"><div class="qtxt">${q.q}</div>${body}<div class="hbox" id="hb"></div></div>
-    <button class="btn bp blk" onclick="nextQ()">التالي ←</button>`;
+    <button class="btn bp blk" onclick="nextQ()">التالي ←</button>`;}
+
+// تلميح ذكي — 3 مستويات متدرجة
+async function useSmartHint(){
+  const q=qQ[qIdx];
+  const used=qHintsPerQ[qIdx]||0;
+  if(used>=3){toast('استنفدت تلميحاتك لهذا السؤال','er');return;}
+  qHintsPerQ[qIdx]=(used+1);qHintsUsed++;
+  const hb=document.getElementById('hb');
+  if(!hb)return;
+
+  const level=used+1;
+  hb.classList.add('on');
+  hb.style.background=level===1?'#fef9c3':level===2?'#fef3c7':'#fde68a';
+  hb.innerHTML=`<div style="font-size:11px;color:#92400e;font-weight:700;margin-bottom:4px">💡 تلميح ${level}/3 ${level===3?'(الأخير)':''}</div><div style="font-size:12px;color:#78350f">جاري التفكير...</div>`;
+
+  const subject=chapters.find(c=>c.lessons?.some(l=>l.id===curLesson.id))?.subject||'';
+  const hintPrompts=[
+    `السؤال: "${q.q}". أعطِ تلميحاً عاماً جداً يوجّه التفكير فقط — لا تذكر الإجابة أبداً. جملة واحدة.`,
+    `السؤال: "${q.q}". أعطِ تلميحاً أكثر تحديداً — اذكر المفهوم أو القانون المطلوب فقط — لا الإجابة. جملة واحدة.`,
+    `السؤال: "${q.q}". هذا آخر تلميح — اذكر الخطوة الأولى للحل فقط، لا تكمل. جملة واحدة.`
+  ];
+
+  const hint=await aiCall(hintPrompts[used],chooseAIMind(subject));
+  hb.innerHTML=`<div style="font-size:11px;color:#92400e;font-weight:700;margin-bottom:4px">💡 تلميح ${level}/3 ${level===3?'(الأخير)':''}</div><div style="font-size:12px;color:#78350f">${hint||'فكّر في المفهوم الأساسي للسؤال'}</div>`;
+
+  // تحديث الزر
+  const newLeft=3-((qHintsPerQ[qIdx])||0);
+  const btn=document.querySelector('.hintb');
+  if(btn){btn.textContent=`💡 ${newLeft} تلميح`;if(newLeft===0){btn.disabled=true;btn.style.opacity='.4';}}
 }
 function ansInput(){return ansType==='write'?`<input type="text" class="txtq" id="txa" placeholder="اكتب إجابتك..." dir="ltr">`:`<div style="text-align:center;padding:14px"><button onclick="startDict()" style="width:58px;height:58px;border-radius:50%;background:var(--blue);color:#fff;border:none;font-size:24px;cursor:pointer">🎤</button><div style="font-size:11px;color:var(--gray);margin-top:6px">اضغط وتكلّم</div><div id="drv" style="margin-top:8px;font-size:14px;font-weight:600"></div></div>`;}
 function setAT(t){ansType=t;document.querySelectorAll('.attb').forEach(b=>b.classList.toggle('on',b.textContent.includes(t==='write'?'كتابة':'إملاء')));const w=document.getElementById('ainw');if(w)w.innerHTML=ansInput();}
@@ -1686,11 +2016,52 @@ async function showResult(){
 
   const subject=chapters.find(c=>c.lessons?.some(l=>l.id===curLesson.id))?.subject||'';
   const level=pct>=.8?'متقدم':pct>=.6?'جيد':'يحتاج مراجعة';
-  const ap=`الطالب ${user.name} — درس "${curLesson.title}" مادة "${subject}". النتيجة: ${correct}/${qQ.length} (${Math.round(pct*100)}%) مستوى: ${level}. ${wrongQs.length?'أخطأ في: '+wrongQs.slice(0,2).join('، '):'أجاب بشكل صحيح على الجميع'}.
-قدّم تحليلاً في 3 جمل: 1)تقييم المستوى 2)نقطة قوة أو ضعف محددة 3)توصية عملية واحدة.`;
-  const analysis=await aiCall(ap,chooseAIMind(subject));
+  const timeTaken=Math.round((Date.now()-quizStartTime)/1000/60); // بالدقائق
+
+  // بناء التقرير الحالي
+  const currentReport={
+    lesson:curLesson.title,subject,
+    score:correct,total:qQ.length,pct:Math.round(pct*100),
+    level,wrongQs:wrongQs.slice(0,5),
+    hintsUsed:qHintsUsed,timeTaken,
+    xp:net,date:new Date().toLocaleDateString('ar')
+  };
+
+  // تحميل التقارير السابقة للمقارنة
+  const prevReports=getReports(subject);
+  const hasPrev=prevReports.length>0;
+  const prevReport=prevReports[0];
+
+  // بناء prompt التحليل
+  let analysisPrompt=`الطالب ${user.name} أنهى اختبار:
+درس: "${curLesson.title}" | مادة: ${subject}
+النتيجة: ${correct}/${qQ.length} (${Math.round(pct*100)}%) | المستوى: ${level}
+الوقت: ${timeTaken} دقيقة | تلميحات مستخدمة: ${qHintsUsed}/3
+${wrongQs.length?'أخطأ في: '+wrongQs.slice(0,3).join('، '):'أجاب صح على الجميع'}`;
+
+  if(hasPrev){
+    analysisPrompt+=`\n\nمقارنة بآخر اختبار في ${subject}:
+كان مستواه: ${prevReport.level} (${prevReport.pct}%)
+${currentReport.pct>prevReport.pct?'تحسّن بمقدار '+(currentReport.pct-prevReport.pct)+'%':currentReport.pct<prevReport.pct?'تراجع بمقدار '+(prevReport.pct-currentReport.pct)+'%':'نفس المستوى'}
+${prevReport.wrongQs?.length?'كان يخطئ في: '+prevReport.wrongQs.join('، '):''}`;
+  }
+
+  analysisPrompt+=`\n\nقدّم تحليلاً ذكياً في 3-4 جمل يتضمن:
+1. تقييم الأداء الحالي بدقة
+${hasPrev?'2. مقارنة مع المرة السابقة وتحديد أين النقص':'2. نقطة قوة أو ضعف محددة'}
+3. توصية عملية واحدة للتحسين`;
+
+  const analysis=await aiCall(analysisPrompt,chooseAIMind(subject));
+
+  // حفظ التقرير مع التحليل
+  currentReport.analysis=analysis||level;
+  saveReport(subject,currentReport);
+
   const el=document.getElementById('ai-lvl-txt');
-  if(el)el.innerHTML=analysis||`مستواك: <strong>${level}</strong> — ${pct>=.8?'أداء رائع، انتقل للدرس التالي':'راجع الأخطاء وأعد المحاولة'}`;
+  if(el){
+    el.innerHTML=(analysis||`مستواك: <strong>${level}</strong> — ${pct>=.8?'أداء رائع':'راجع الأخطاء'}`)
+      +(hasPrev?`<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.2);font-size:11px;opacity:.7">📊 مقارنة: ${currentReport.pct>prevReport.pct?'↑ تحسّن +':'↓ تراجع '}${Math.abs(currentReport.pct-prevReport.pct)}% من المرة السابقة</div>`:'');
+  }
 }
 function startMistakes(){
   const allQ=chapters.flatMap(c=>c.lessons?.flatMap(l=>l.questions||[])||[]);
@@ -1812,6 +2183,80 @@ async function sendChat(){
     </div>`;
   }
   msgs.scrollTop=msgs.scrollHeight;
+}
+
+// === REPORTS PAGE ===
+async function renderReports(){
+  setSA(2);
+  const allSubjects=['التربية الإسلامية','التربية المدنية','اللغة العربية','الرياضيات','التاريخ','الجغرافيا','العلوم الطبيعية','الفيزياء','الكيمياء','الإنجليزية','الفرنسية'];
+  const subjectsWithReports=allSubjects.filter(s=>getReports(s).length>0);
+
+  document.getElementById('content').innerHTML=`
+    <div class="wb anim-fadeup" style="background:linear-gradient(135deg,#1e3a5f,#1e293b)">
+      <h2>📈 تقاريري التحليلية</h2>
+      <p style="opacity:.8;margin-top:4px">تحليل أدائك في جميع المواد عبر الزمن</p>
+    </div>
+    ${subjectsWithReports.length?'':'<div class="card" style="text-align:center;padding:28px;color:var(--gray)"><div style="font-size:36px;margin-bottom:8px">📭</div><p>أكمل اختباراً أولاً لتظهر تقاريرك هنا</p></div>'}
+    <div id="reports-content"></div>`;
+
+  if(!subjectsWithReports.length)return;
+
+  const rc=document.getElementById('reports-content');
+  for(const subject of subjectsWithReports){
+    const reports=getReports(subject);
+    const cfg=SUBJ_CUBE[subject]||{ico:'📚',cls:'cube-other'};
+    const latest=reports[0];
+    const trend=reports.length>1?(latest.pct>reports[1].pct?'↑':'↓'):'—';
+    const trendColor=trend==='↑'?'var(--green)':trend==='↓'?'var(--red)':'var(--gray)';
+
+    const div=document.createElement('div');
+    div.style.cssText='background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden';
+    div.innerHTML=`
+      <div style="padding:14px;cursor:pointer;display:flex;align-items:center;gap:12px" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <div style="font-size:22px">${cfg.ico}</div>
+        <div style="flex:1">
+          <div style="font-weight:800;font-size:14px">${subject}</div>
+          <div style="font-size:12px;color:var(--gray);margin-top:2px">${reports.length} اختبار · آخر نتيجة: ${latest.pct}%</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:20px;font-weight:900;color:${latest.pct>=80?'var(--green)':latest.pct>=60?'var(--blue)':'var(--red)'}">${latest.pct}%</div>
+          <div style="font-size:13px;color:${trendColor};font-weight:700">${trend}</div>
+        </div>
+      </div>
+      <div class="hidden" style="padding:0 14px 14px;border-top:1px solid var(--border)">
+        ${reports.map((r,i)=>`
+          <div style="padding:10px 0;border-bottom:${i<reports.length-1?'1px solid var(--border)':'none'}">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+              <span style="font-size:12px;font-weight:700">${r.lesson}</span>
+              <span style="font-size:11px;color:var(--gray)">${r.date}</span>
+            </div>
+            <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:6px">
+              <div style="height:100%;width:${r.pct}%;background:${r.pct>=80?'var(--green)':r.pct>=60?'var(--blue)':'var(--red)'};border-radius:3px;transition:.5s"></div>
+            </div>
+            <div style="font-size:11px;color:var(--gray);line-height:1.6">${r.analysis||r.level}</div>
+          </div>`).join('')}
+
+        <!-- تحليل مقارن إذا عندنا أكثر من تقرير -->
+        ${reports.length>=2?`<div id="compare-${subject.replace(/\s/g,'-')}" style="margin-top:10px;padding:10px;background:linear-gradient(135deg,#1e1b4b20,#3730a320);border-radius:10px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px">🔍 تحليل مقارن</div>
+          <div style="font-size:12px;color:var(--gray)">جاري التحليل...</div>
+        </div>`:''}
+      </div>`;
+    rc.appendChild(div);
+
+    // تحليل مقارن للمواد التي فيها أكثر من تقرير
+    if(reports.length>=2){
+      const compareEl=document.getElementById('compare-'+subject.replace(/\s/g,'-'));
+      if(compareEl){
+        const cp=`قارن هذين التقريرين للطالب ${user.name} في مادة ${subject}:
+التقرير الأول (الأحدث): ${reports[0].pct}% في "${reports[0].lesson}" — أخطأ في: ${reports[0].wrongQs?.join('، ')||'لا شيء'}
+التقرير الثاني: ${reports[1].pct}% في "${reports[1].lesson}" — أخطأ في: ${reports[1].wrongQs?.join('، ')||'لا شيء'}
+حدّد: 1)أين تحسّن 2)أين لا يزال النقص 3)متى بدأ النقص إن أمكن. جملتان فقط.`;
+        const comp=await aiCall(cp,chooseAIMind(subject));
+        compareEl.querySelector('div:last-child').textContent=comp||'مقارنة التقارير تحتاج المزيد من الاختبارات';
+      }
+    }
+  }
 }
 
 // === PROGRESS PAGE ===
@@ -1962,7 +2407,7 @@ function showCertificate(subject){
       <p style="font-size:18px;font-weight:800;color:var(--blue);margin-bottom:4px">${subject}</p>
       <p style="font-size:12px;color:#6b7280">بتاريخ ${dateStr}</p>
       <div style="height:2px;background:linear-gradient(to right,#f59e0b,#d97706,#f59e0b);margin:12px 0"></div>
-      <p style="font-size:11px;color:#94a3b8">منصة بلوغ المرام التعليمية 🇲🇷</p>
+      <p style="font-size:11px;color:#94a3b8">منصة بلوغ المرام التعليمية</p>
       <button onclick="window.print()" style="margin-top:14px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border:none;border-radius:10px;padding:10px 24px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer">🖨️ طباعة الشهادة</button>
     </div>`;
   document.body.appendChild(modal);
@@ -2498,5 +2943,55 @@ function resetAPIKey(){
 // API key modal - only shown when admin triggers it manually
 // Never shown automatically to students
 </script>
+
+<div class="card">
+  <h2>🎯 طريقة دراسة الرياضيات</h2>
+
+  <button onclick="startLesson('video')">🎥 شاهد الشرح</button>
+  <button onclick="startLesson('examples')">📝 أمثلة محلولة</button>
+  <button onclick="startLesson('practice')">✍️ تمارين</button>
+  <button onclick="startLesson('goal')">🎯 اختبار</button>
+
+  <p>💡 لا تنتقل حتى تحل بنفسك</p>
+</div>
+
+<script>
+let score = 0;
+
+function startLesson(type) {
+  if (type === "video") {
+    alert("🎥 شاهد فيديو قصير (أضف رابط لاحقاً)");
+  }
+  if (type === "examples") {
+    alert("📝 مثال:\n2x + 3 = 7\nالحل: x = 2");
+  }
+  if (type === "practice") {
+    askQuestion();
+  }
+  if (type === "goal") {
+    checkProgress();
+  }
+}
+
+function askQuestion() {
+  let answer = prompt("✍️ احسب: 2x + 3 = 7");
+
+  if (answer == "2") {
+    alert("✅ صحيح!");
+    score++;
+  } else {
+    alert("❌ خطأ\n💡 التلميح: اطرح 3 ثم اقسم على 2");
+  }
+}
+
+function checkProgress() {
+  if (score >= 2) {
+    alert("🎉 ممتاز! يمكنك الانتقال");
+  } else {
+    alert("❌ يجب حل تمارين أكثر");
+  }
+}
+</script>
+
 </body>
 </html>
