@@ -1105,6 +1105,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       chapters=gs('bam_ch',sampleData());
     }
     checkHash();
+	if (window.hideLoading) window.hideLoading();
   });
 });
 // === LOADING SCREEN ===
@@ -3007,6 +3008,28 @@ function checkProgress() {
   }
 }
 if (window.hideLoading) window.hideLoading();
+</script>
+
+</body>
+</html>
+
+  let answer = prompt("✍️ احسب: 2x + 3 = 7");
+
+  if (answer == "2") {
+    alert("✅ صحيح!");
+    score++;
+  } else {
+    alert("❌ خطأ\n💡 التلميح: اطرح 3 ثم اقسم على 2");
+  }
+}
+
+function checkProgress() {
+  if (score >= 2) {
+    alert("🎉 ممتاز! يمكنك الانتقال");
+  } else {
+    alert("❌ يجب حل تمارين أكثر");
+  }
+}
 </script>
 
 </body>
