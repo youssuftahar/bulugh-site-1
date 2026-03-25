@@ -1112,12 +1112,13 @@ document.addEventListener('DOMContentLoaded',()=>{
 const loadingMsgs=['جاري تحميل المنصة...','جاري تحليل مستواك...','نُجهّز تجربتك المخصصة...','المنصة جاهزة ✓'];
 
 let loadingFinished = false;
+let loadingFinished = false;
 function runLoader(cb) {
   const bar = document.getElementById('loading-bar');
   const msg = document.getElementById('loading-msg');
   const ls = document.getElementById('loading-screen');
   if (!ls) { if (cb) cb(); return; }
-  const msgs = window._loadMsgs || loadingMsgs;
+  const msgs = window._loadMsgs || ['جاري تحميل المنصة...', 'جاري تحليل مستواك...', 'نُجهّز تجربتك المخصصة...', 'المنصة جاهزة ✓'];
   let p = 0, i = 0;
 
   const iv = setInterval(() => {
@@ -1129,6 +1130,23 @@ function runLoader(cb) {
       i++;
     }
   }, 180);
+
+  window.hideLoading = function() {
+    if (loadingFinished) return;
+    loadingFinished = true;
+    clearInterval(iv);
+    ls.style.transition = 'opacity 0.3s';
+    ls.style.opacity = '0';
+    setTimeout(() => {
+      ls.style.display = 'none';
+      if (cb) cb();
+    }, 300);
+  };
+
+  setTimeout(() => {
+    if (!loadingFinished) window.hideLoading();
+  }, 8000);
+}
 
   window.hideLoading = function() {
     if (loadingFinished) return;
