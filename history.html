@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h2>سجل المعاملات</h2>
+    </div>
+    <div class="filters">
+      <form method="get" class="filter-form">
+        <input type="text" name="search" placeholder="بحث..." value="{{ search }}">
+        <select name="type">
+          <option value="">الكل</option>
+          <option value="expense" {% if type_filter == 'expense' %}selected{% endif %}>مصروف</option>
+          <option value="income" {% if type_filter == 'income' %}selected{% endif %}>دخل</option>
+        </select>
+        <button type="submit" class="btn btn-primary">بحث</button>
+        <a href="/history" class="btn btn-secondary">إعادة</a>
+      </form>
+    </div>
+    {% if transactions %}
+    <div class="transactions-list">
+      {% for t in transactions %}
+      <div class="transaction-item {{ t.type }}">
+        <div class="transaction-icon">
+          {% if t.category == 'مأكولات' %}🍕
+          {% elif t.category == 'مواصلات' %}🚗
+          {% elif t.category == 'ترفيه' %}🎮
+          {% elif t.category == 'ملابس' %}👕
+          {% elif t.category == 'صحة' %}💊
+          {% elif t.category == 'تعليم' %}📚
+          {% elif t.category == 'فواتير' %}⚡
+          {% elif t.category == 'راتب' %}💰
+          {% elif t.category == 'هدية' %}🎁
+          {% elif t.category == 'مكافأة' %}⭐
+          {% elif t.category == 'بيع' %}🛍️
+          {% else %}💫{% endif %}
+        </div>
+        <div class="transaction-info">
+          <div class="transaction-category">{{ t.category }}</div>
+          <div class="transaction-desc">{{ t.description or '' }}</div>
+          <div class="transaction-date">{{ t.date }}</div>
+        </div>
+        <div class="transaction-amount {{ t.type }}">
+          {% if t.type == 'income' %}+{% else %}-{% endif %}
+          {{ "%.2f"|format(t.amount) }} أوقية
+        </div>
+        <button class="btn-delete" onclick="deleteTransaction({{ t.id }}, this)">🗑️</button>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <p>لا توجد معاملات</p>
+      <a href="/add" class="btn btn-primary">أضف معاملة</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function deleteTransaction(id, btn) {
+  if (!confirm('هل تريد حذف هذه المعاملة؟')) return;
+  const res = await fetch(`/api/transactions/${id}`, {method: 'DELETE'});
+  const data = await res.json();
+  if (data.success) btn.closest('.transaction-item').remove();
+}
+</script>
+{% endblock %}
