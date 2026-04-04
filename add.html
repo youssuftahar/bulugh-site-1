@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <div class="card add-card">
+    <h2 class="card-title">إضافة معاملة جديدة</h2>
+
+    <div class="voice-section">
+      <button id="voiceBtn" class="voice-btn">
+        <span class="voice-icon">🎤</span>
+        <span class="voice-text">اضغط للتحدث</span>
+      </button>
+      <div id="voiceStatus" class="voice-status"></div>
+      <div id="voiceResult" class="voice-result" style="display:none">
+        <p id="voiceText"></p>
+      </div>
+    </div>
+
+    <div class="divider">أو أدخل يدوياً</div>
+
+    <form id="transactionForm" class="form">
+      <div class="type-toggle">
+        <button type="button" class="toggle-btn active" id="expenseBtn" onclick="setType('expense')">📉 مصروف</button>
+        <button type="button" class="toggle-btn" id="incomeBtn" onclick="setType('income')">📈 دخل</button>
+      </div>
+
+      <input type="hidden" id="typeField" value="expense">
+
+      <div class="form-group">
+        <label>المبلغ (أوقية)</label>
+        <input type="number" id="amount" placeholder="0" min="0" step="0.01" required>
+      </div>
+
+      <div class="form-group">
+        <label>الفئة</label>
+        <select id="category">
+          <option value="مأكولات">🍕 مأكولات</option>
+          <option value="مواصلات">🚗 مواصلات</option>
+          <option value="ترفيه">🎮 ترفيه</option>
+          <option value="ملابس">👕 ملابس</option>
+          <option value="صحة">💊 صحة</option>
+          <option value="تعليم">📚 تعليم</option>
+          <option value="فواتير">⚡ فواتير</option>
+          <option value="أخرى">💫 أخرى</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>الوصف (اختياري)</label>
+        <input type="text" id="description" placeholder="مثال: غداء مع الأصدقاء">
+      </div>
+
+      <div class="form-group">
+        <label>التاريخ</label>
+        <input type="date" id="transDate">
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full">حفظ المعاملة</button>
+    </form>
+
+    <div id="successMsg" class="success-msg" style="display:none">✅ تم حفظ المعاملة بنجاح!</div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const incomeCategories = ['راتب 💰','هدية 🎁','مكافأة ⭐','بيع 🛍️','أخرى 💫'];
+const expenseCategories = ['مأكولات 🍕','مواصلات 🚗','ترفيه 🎮','ملابس 👕','صحة 💊','تعليم 📚','فواتير ⚡','أخرى 💫'];
+const incomeVals = ['راتب','هدية','مكافأة','بيع','أخرى'];
+const expenseVals = ['مأكولات','مواصلات','ترفيه','ملابس','صحة','تعليم','فواتير','أخرى'];
+
+document.getElementById('transDate').value = new Date().toISOString().split('T')[0];
+
+function setType(type) {
+  document.getElementById('typeField').value = type;
+  document.getElementById('expenseBtn').classList.toggle('active', type === 'expense');
+  document.getElementById('incomeBtn').classList.toggle('active', type === 'income');
+  const cat = document.getElementById('category');
+  const labels = type === 'expense' ? expenseCategories : incomeCategories;
+  const vals = type === 'expense' ? expenseVals : incomeVals;
+  cat.innerHTML = '';
+  vals.forEach((v, i) => {
+    const opt = document.createElement('option');
+    opt.value = v;
+    opt.textContent = labels[i];
+    cat.appendChild(opt);
+  });
+}
+
+const voiceBtn = document.getElementById('voiceBtn');
+const voiceStatus = document.getElementById('voiceStatus');
+const voiceResult = document.getElementById('voiceResult');
+const voiceText = document.getElementById('voiceText');
+
+voiceBtn.addEventListener('click', () => {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    voiceStatus.textContent = 'المتصفح لا يدعم التعرف على الصوت';
+    return;
+  }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SR();
+  recognition.lang = 'ar-SA';
+  recognition.start();
+  voiceBtn.classList.add('recording');
+  voiceStatus.textContent = '🔴 جاري الاستماع...';
+
+  recognition.onresult = async (e) => {
+    const text = e.results[0][0].transcript;
+    voiceText.textContent = `سمعت: "${text}"`;
+    voiceResult.style.display = 'block';
+    voiceStatus.textContent = '🤖 جاري التحليل...';
+    const res = await fetch('/api/analyze-voice', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({text})
+    });
+    const data = await res.json();
+    if (data.success) {
+      const d = data.data;
+      document.getElementById('amount').value = d.amount;
+      document.getElementById('description').value = d.description || '';
+      setType(d.type);
+      setTimeout(() => {
+        const catEl = document.getElementById('category');
+        for (let opt of catEl.options) {
+          if (opt.value === d.category) { opt.selected = true; break; }
+        }
+      }, 100);
+      voiceStatus.textContent = '✅ تم التحليل — راجع البيانات وأضف';
+    } else {
+      voiceStatus.textContent = '❌ تعذر التحليل، أدخل يدوياً';
+    }
+    voiceBtn.classList.remove('recording');
+  };
+
+  recognition.onerror = () => {
+    voiceStatus.textContent = '❌ حدث خطأ، حاول مجدداً';
+    voiceBtn.classList.remove('recording');
+  };
+});
+
+document.getElementById('transactionForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = {
+    amount: parseFloat(document.getElementById('amount').value),
+    type: document.getElementById('typeField').value,
+    category: document.getElementById('category').value,
+    description: document.getElementById('description').value,
+    date: document.getElementById('transDate').value
+  };
+  const res = await fetch('/api/transactions', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  });
+  const result = await res.json();
+  if (result.success) {
+    document.getElementById('successMsg').style.display = 'block';
+    setTimeout(() => window.location.href = '/', 1500);
+  }
+});
+</script>
+{% endblock %}
