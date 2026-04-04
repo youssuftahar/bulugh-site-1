@@ -1,0 +1,37 @@
+{% extends "base.html" %} {% block content %}
+💎
+الرصيد الحالي
+{{ "%.2f"|format(balance) }} أوقية
+📈
+إجمالي الدخل
+{{ "%.2f"|format(total_income) }} أوقية
+📉
+إجمالي المصاريف
+{{ "%.2f"|format(total_expense) }} أوقية
+آخر المعاملات
+عرض الكل
+{% if transactions %}
+{% for t in transactions %}
+{% if t.category == 'مأكولات' %}🍕 {% elif t.category == 'مواصلات' %}🚗 {% elif t.category == 'ترفيه' %}🎮 {% elif t.category == 'ملابس' %}👕 {% elif t.category == 'صحة' %}💊 {% elif t.category == 'تعليم' %}📚 {% elif t.category == 'فواتير' %}⚡ {% elif t.category == 'راتب' %}💰 {% elif t.category == 'هدية' %}🎁 {% elif t.category == 'مكافأة' %}⭐ {% elif t.category == 'بيع' %}🛍️ {% else %}💫{% endif %}
+{{ t.category }}
+{{ t.date }}
+{% if t.type == 'income' %}+{% else %}-{% endif %} {{ "%.2f"|format(t.amount) }} أوقية
+{% endfor %}
+{% else %}
+📭
+لا توجد معاملات بعد
+
+أضف أول معاملة
+{% endif %}
+توزيع المصاريف
+{% if category_expenses %}
+{% for cat in category_expenses %}
+{{ cat.category }}
+{{ "%.0f"|format(cat.total) }}
+{% endfor %}
+{% else %}
+📊
+لا توجد مصاريف لعرضها
+
+{% endif %}
+{% endblock %}
